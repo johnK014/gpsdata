@@ -1,9 +1,6 @@
-,Upper left,,Upper right,,Lowerleft,,Lowerigth,
-Building,Latitude,Longitude,Latitude,Longitude,Latitude,Longitude,Latitude,Longitude
-B1,,,,,,,,
-B2,14?15'41"N ,120?55'11"E,14?15'41"N ,120?55'13"E,14?15'39"N ,120?55'11"E,14?15'39"N 120?55'13"E,
-B3,,,,,,,,
-B4,,,,,,,,
-B5,,,,,,,,
-B6,,,,,,,,
-B7,,,,,,,,
+Device,Date&Time,Latitude,Longitude
+GPS1,Sun Oct 19 2025 00:25:20 GMT+0800 (Singapore Standard Time),14.286182,120.892754
+GPS2,10/18/202522:54:30,15,125
+GPS3,Sun Oct 19 2025 00:00:00 GMT+0800 (Singapore Standard Time),16,126
+GPS4,Sun Oct 19 2025 00:00:00 GMT+0800 (Singapore Standard Time),18,118
+GPS5,Sun Oct 19 2025 00:00:00 GMT+0800 (Singapore Standard Time),17,122
