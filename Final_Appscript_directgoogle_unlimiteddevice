@@ -1,0 +1,65 @@
+function doPost(e) {
+  try {
+    var ss = SpreadsheetApp.openById("1jPoUQIj8ZD-Lq1rKZiqplNj6gB0IA3LoICsQhIdxsc4"); // Your Sheet ID
+    var sheet = ss.getSheetByName("Sheet1");
+    var device = e.parameter.device;
+    var lat = e.parameter.lat;
+    var lon = e.parameter.lon;
+    var time = new Date();
+
+    var data = sheet.getDataRange().getValues();
+    var rowIndex = -1;
+
+    for (var i = 1; i < data.length; i++) {
+      if (data[i][0] == device) {
+        rowIndex = i + 1;
+        break;
+      }
+    }
+
+    if (rowIndex != -1) {
+      sheet.getRange(rowIndex, 2).setValue(time);
+      sheet.getRange(rowIndex, 3).setValue(lat);
+      sheet.getRange(rowIndex, 4).setValue(lon);
+    } else {
+      sheet.appendRow([device, time, lat, lon]);
+    }
+
+    // You can return the updated data here as well, but for now, we'll keep the status message
+    return ContentService.createTextOutput("Success").setMimeType(ContentService.MimeType.TEXT);
+  } catch (err) {
+    return ContentService.createTextOutput("Error: " + err.message).setMimeType(ContentService.MimeType.TEXT);
+  }
+}
+
+/**
+ * Handles GET requests (for fetching data).
+ */
+function doGet(e) {
+  try {
+    var ss = SpreadsheetApp.openById("1jPoUQIj8ZD-Lq1rKZiqplNj6gB0IA3LoICsQhIdxsc4"); // Your Sheet ID
+    var sheetName = e.parameter.sheet || "Sheet1";
+    var sheet = ss.getSheetByName(sheetName);
+    
+    if (!sheet) {
+      return ContentService.createTextOutput(JSON.stringify({ error: "Sheet not found: " + sheetName }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    var values = sheet.getDataRange().getValues();
+
+    var output = {
+      sheetName: sheetName,
+      data: values
+    };
+
+    // 💡 FIX IS HERE: Changed ALLOWALL to SET_ALLOW_ANY
+// Return the data as JSON
+    return ContentService.createTextOutput(JSON.stringify(output))
+      .setMimeType(ContentService.MimeType.JSON); // No X-Frame-Options needed
+
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ error: "Script error: " + err.message }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}

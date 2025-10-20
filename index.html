@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Indoor Machine Tracking</title>
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --accent-color: #3498db;
+      --background-color: #f4f6f8;
+      --dot-color: #e74c3c;
+      --highlight-color: #f1c40f;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--background-color);
+      color: var(--primary-color);
+      overflow: hidden;
+    }
+    header {
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      padding: 10px 20px;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      justify-content: center;
+      z-index: 2;
+      position: relative;
+    }
+    .controls select,
+    .controls input,
+    .controls button {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      min-width: 180px;
+    }
+    .controls button {
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .controls button:hover {
+      background-color: #2980b9;
+    }
+    .autocomplete-container {
+      position: relative;
+      width: 200px;
+    }
+    .autocomplete-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      border: 1px solid #ccc;
+      background: white;
+      z-index: 10;
+      max-height: 150px;
+      overflow-y: auto;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+    .autocomplete-item {
+      padding: 8px;
+      cursor: pointer;
+    }
+    .autocomplete-item:hover {
+      background-color: #eee;
+    }
+    .prompt-message {
+      text-align: center;
+      margin: 10px 0;
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--accent-color);
+      min-height: 20px;
+    }
+#map {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto; /* centers the container horizontally */
+  overflow: hidden;
+}
+
+#floorplan {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  padding: 0;
+  margin: 0 auto; /* centers the image if needed */
+}
+    .dot {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background-color: var(--dot-color);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: transform 0.2s ease;
+	  z-index: 10;
+    }
+    .dot.highlight {
+      border: 3px solid var(--highlight-color); 
+      transform: scale(1.5) translate(-50%, -50%); 
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>Real-Time Indoor Asset Locator</h2>
+  </header>
+  <div class="controls">
+    <label for="buildingSelect">Select Building:</label>
+    <select id="buildingSelect">
+      <option value="B1">B1</option>
+      <option value="B2">B2</option>
+      <option value="B3">B3</option>
+      <option value="B4">B4</option>
+      <option value="B5">B5</option>
+      <option value="B6">B6</option>
+    </select>
+    <div class="autocomplete-container">
+      <input type="text" id="searchInput" placeholder="Search machine name..." />
+      <div id="autocompleteList" class="autocomplete-list"></div>
+    </div>
+    <button onclick="searchMachine()">Search</button>
+  </div>
+  <div id="promptMessage" class="prompt-message"></div>
+  <div id="map">
+    <img id="floorplan" src="B1.png" alt="Floorplan" /> 
+  </div>
+  
+  <script src="app.js"></script> 
+</body>
+</html>
